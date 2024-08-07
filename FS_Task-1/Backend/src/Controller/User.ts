@@ -13,9 +13,9 @@ export const signup = async(req: Request,res: Response)=>{
     const bodyParser = req.body
     const parsedBody = signUpType.safeParse(bodyParser)
 
-    // if(parsedBody.error) return res.status(400).json({
-    //     message: "Enter Data Correctly!"
-    // })
+    if(parsedBody.error) return res.status(400).json({
+        message: "Enter Data Correctly!"
+    })
 
     const hashedPassword = await bcrypt.hash(bodyParser.password, 10)
 
@@ -42,4 +42,40 @@ export const signup = async(req: Request,res: Response)=>{
             message: "Something went wrong!"
         })
     }
+}
+
+export const signin = async(req: Request,res: Response)=>{
+    const bodyParser = req.body
+    const parsedBody = signUpType.safeParse(bodyParser)
+
+    if(parsedBody.error) return res.status(400).json({
+        message: "Enter Data Correctly!"
+    })
+    
+    const user = await prisma.users.findFirst({
+        where:{
+            email: bodyParser.email
+        }
+    })
+
+    if(!user) return res.status(400).json({
+        message: "User not found!"
+    })
+
+    const comparePassword = await bcrypt.compare(bodyParser.password, user.password)
+
+    if(!comparePassword) return res.status(400).json({
+        message: "Password did not match!"
+    })
+
+    const payload = {
+        email: bodyParser.email
+    }
+
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h'})
+
+    res.cookie('user', token)
+    return res.json({
+        message: "User Logged in!"
+    })
 }
