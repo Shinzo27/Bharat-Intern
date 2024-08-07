@@ -76,6 +76,7 @@ export const signin = async(req: Request,res: Response)=>{
 
     res.cookie('user', token)
     return res.json({
+        success: true,
         message: "User Logged in!"
     })
 }
