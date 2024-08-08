@@ -5,10 +5,25 @@ import { Context } from '../main'
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  const {setIsAuthenticated} = useContext(Context)
+  const { login } = useContext(Context)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigateTo = useNavigate()
+
+  const loginHandler = async(e) => {
+    e.preventDefault()
+    try {
+      const { data } = await axios.post("http://localhost:3000/api/v1/user/signin", { email, password}, {withCredentials: true})
+      if(data.success) {
+        const { email, token } = data
+        login(email, token)
+        toast.success(data.message)
+        navigateTo('/')
+      }
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -23,7 +38,7 @@ const Login = () => {
           <nav className="mb-8">
               <p href="#" className=" text-2xl font-bold border-blue-600 pb-1">Login</p>
           </nav>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form className="mt-8 space-y-6" method="POST" onSubmit={loginHandler}>
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
                 <label htmlFor="email-address" className="sr-only">Email address</label>

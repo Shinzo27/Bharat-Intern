@@ -4,14 +4,33 @@ import App from './App.jsx'
 import './index.css'
 
 
-export const Context = createContext({ isAuthenticated: false})
+export const Context = createContext()
 
 const AppWrapper = () => {
-  const [ isAuthenticated, setIsAuthenticated ] = useState(false)
-  const [ user,setUser ] = useState({})
+  const [auth, setAuth] = useState({
+    isAuthenticated: false,
+    user: null,
+    token: null
+  })
+
+  const login = (userData, token) => {
+    setAuth({
+      isAuthenticated: true,
+      user: userData,
+      token: token
+    })
+  }
+
+  const logout = () => {
+    setAuth({
+      isAuthenticated: false,
+      user: null,
+      token: null
+    })
+  }
 
   return (
-    <Context.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser }}>
+    <Context.Provider value={{ auth, login, logout }}>
       <App/>
     </Context.Provider>
   )

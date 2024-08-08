@@ -77,6 +77,21 @@ export const signin = async(req: Request,res: Response)=>{
     res.cookie('user', token)
     return res.json({
         success: true,
-        message: "User Logged in!"
+        message: "User Logged in!",
+        email: bodyParser.email,
+        token: token
     })
+}
+
+export const logout = (req:Request, res:Response) => {
+    res
+    .status(201)
+    .cookie("user", "", {
+      httpOnly: true,
+      expires: new Date(Date.now()),
+    })
+    .json({
+      success: true,
+      message: "Customer Logged Out Successfully.",
+    });
 }
