@@ -7,20 +7,22 @@ import Signup from './Components/Signup'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from './Components/Footer'
+import UpdateDetails from './Components/UpdateDetails'
 
 function App() {
   return (
     <>
-    <BrowserRouter>
-      <Navbar/>
-        <Routes>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/signup' element={<Signup/>}/>
-          <Route path='/' element={<Hero/>}/>
-        </Routes>
-      <Footer/>
-        <ToastContainer position='top-center'/>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Navbar/>
+          <Routes>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/signup' element={<Signup/>}/>
+            <Route path='/' element={<Hero/>}/>
+            <Route path='/updateDetails' element={<UpdateDetails/>}/>
+          </Routes>
+        <Footer/>
+          <ToastContainer position='top-center'/>
+      </BrowserRouter>
     </>
   )
 }
