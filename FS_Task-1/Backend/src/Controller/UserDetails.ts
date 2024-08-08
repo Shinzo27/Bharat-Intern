@@ -47,6 +47,7 @@ export const enterUserDetail = async(req: AuthenticatedRequest,res: Response,nex
 
     if(details){
         return res.status(200).json({
+            success: true,
             message: "User details added successfully!"
         }) 
     }else {

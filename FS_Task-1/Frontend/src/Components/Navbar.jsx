@@ -5,13 +5,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const { auth } = useContext(Context);
+  const { auth, logout } = useContext(Context);
   const navigateTo = useNavigate()
 
   const logoutHandler = async() => {
     try {
       const { data } = await axios.get('http://localhost:3000/api/v1/user/logout', {withCredentials: true})
       if(data.success){
+        logout()
         toast.success(data.message)
         navigateTo('/login')
       }

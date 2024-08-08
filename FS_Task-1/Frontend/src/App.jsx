@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from './Components/Footer'
 import UpdateDetails from './Components/UpdateDetails'
+import EnterDetails from './Components/EnterDetails'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='/signup' element={<Signup/>}/>
             <Route path='/' element={<Hero/>}/>
             <Route path='/updateDetails' element={<UpdateDetails/>}/>
+            <Route path='/enterDetails' element={<EnterDetails/>}/>
           </Routes>
         <Footer/>
           <ToastContainer position='top-center'/>

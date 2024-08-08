@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { Context } from '../main'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const { login } = useContext(Context)
@@ -78,6 +78,11 @@ const Login = () => {
               </button>
             </div>
           </form>
+          <div className='flex justify-center items-center pt-4'>
+            <p className='text-md'>
+              Haven't logged in? <Link className='text-md text-blue-500' to={'/signup'}>Register here</Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

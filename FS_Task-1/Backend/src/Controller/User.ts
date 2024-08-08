@@ -35,6 +35,7 @@ export const signup = async(req: Request,res: Response)=>{
 
         res.cookie('user', token)
         return res.json({
+            success: true,
             message: "User Registered!"
         })
     } else {
