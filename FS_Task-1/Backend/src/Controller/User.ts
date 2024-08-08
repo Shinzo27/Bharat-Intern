@@ -17,6 +17,16 @@ export const signup = async(req: Request,res: Response)=>{
         message: "Enter Data Correctly!"
     })
 
+    const ifExist = await prisma.users.findFirst({
+        where: {
+            email: parsedBody.data.email
+        }
+    })
+
+    if(ifExist) return res.status(400).json({
+        message: "Email already taken!"
+    })
+
     const hashedPassword = await bcrypt.hash(bodyParser.password, 10)
 
     const user = await prisma.users.create({
