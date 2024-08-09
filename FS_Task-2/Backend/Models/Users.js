@@ -14,6 +14,9 @@ const userSchema = new Schema({
         type:String,
         required:true,
     },
+    totalIncome: {
+        type: Number
+    }
 });
 
 const User = model('User', userSchema);

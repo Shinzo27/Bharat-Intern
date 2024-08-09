@@ -3,8 +3,8 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 export const signup = async(req,res) => {
-    const {name, email, password} = req.body
-
+    const {name, email, password, totalIncome} = req.body
+    
     if(!name || !email || !password) return res.status(200).json({
         success: false,
         message: "Enter details correctly!"
@@ -24,7 +24,8 @@ export const signup = async(req,res) => {
     const user = await User.create({
         email,
         name,
-        password: hashedPassword
+        password: hashedPassword,
+        totalIncome: Number(totalIncome)
     })
 
     const payload = {
