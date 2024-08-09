@@ -3,6 +3,7 @@ import userRouter from './Routes/Users.js'
 import mongoose from 'mongoose'
 import { config } from 'dotenv'
 import cookieParser from 'cookie-parser'
+import transactionRouter from './Routes/Transaction.js'
 
 const app = express()
 const PORT = process.env.PORT | 8000
@@ -16,6 +17,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({extended: true}))
 
 app.use('/api/v1/user', userRouter)
+app.use('/api/v1/transaction', transactionRouter)
 
 app.get('/', (req,res)=>{
     res.send("Hello world")
