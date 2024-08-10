@@ -61,7 +61,7 @@ export const getTotalIncome = async (req, res) => {
 
 export const addIncome = async (req, res) => {
   const userId = req.user;
-  const { income, category, description, date } = req.body;
+  const { amount, category, description, date } = req.body;
 
   const user = await User.findOne({
     email: userId.email,
@@ -70,7 +70,7 @@ export const addIncome = async (req, res) => {
   const transaction = await Transaction.create({
     userId: user._id,
     type: "Income",
-    amount: Number(income),
+    amount: Number(amount),
     category,
     description,
     date,
@@ -79,7 +79,7 @@ export const addIncome = async (req, res) => {
   if (transaction) {
     const increment = await User.findOneAndUpdate(
       { _id: user._id },
-      { $inc: { totalIncome: Number(income) } }
+      { $inc: { totalIncome: Number(amount) } }
     );
 
     if (increment) {
@@ -88,13 +88,13 @@ export const addIncome = async (req, res) => {
         message: "Income added successfully!",
       });
     } else {
-      return res.status(200).json({
+      return res.status(400).json({
         success: false,
         message: "Something went wrong!",
       });
     }
   } else {
-    return res.status(200).json({
+    return res.status(400).json({
       success: false,
       message: "Something went wrong!",
     });
@@ -103,7 +103,7 @@ export const addIncome = async (req, res) => {
 
 export const addExpense = async (req, res) => {
   const userId = req.user;
-  const { expense, category, description, date } = req.body;
+  const { amount, category, description, date } = req.body;
 
   const user = await User.findOne({
     email: userId.email,
@@ -111,14 +111,14 @@ export const addExpense = async (req, res) => {
 
   const totalIncome = user.totalIncome
 
-  if(expense > totalIncome) return res.status(200).json({
+  if(amount > totalIncome) return res.status(200).json({
       message: "Not enough income!"
   })
 
   const transaction = await Transaction.create({
     userId: user._id,
     type: "Expense",
-    amount: Number(expense),
+    amount: Number(amount),
     category,
     description,
     date,
@@ -127,7 +127,7 @@ export const addExpense = async (req, res) => {
   if (transaction) {
     const decrement = await User.findOneAndUpdate(
       { _id: user._id },
-      { $inc: { totalIncome: -Number(expense) } }
+      { $inc: { totalIncome: -Number(amount) } }
     );
 
     if (decrement) {

@@ -2,9 +2,10 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Context } from "../main";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Signin = () => {
+  const { auth } = useContext(Context)
   const { login } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +29,8 @@ const Signin = () => {
       toast.error(error.response.data.message);
     }
   };
+
+  if(auth.isAuthenticated) return <Navigate to={'/'}/>
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8">

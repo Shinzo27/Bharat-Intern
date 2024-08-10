@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const AddIncome = () => {
   const [date, setDate] = useState('');
@@ -6,10 +8,17 @@ const AddIncome = () => {
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log({ date, category, amount, description });
+    try {
+      const { data } = await axios.post('http://localhost:8000/api/v1/transaction/addIncome', { date, category, amount, description }, { withCredentials: true })
+      if(data.success) {
+        toast.success(data.message)
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="bg-white p-6 rounded-lg border">
@@ -67,7 +76,7 @@ const AddIncome = () => {
           type="submit"
           className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800"
         >
-          Add Income
+          Add Income  
         </button>
       </form>
     </div>

@@ -8,7 +8,6 @@ const HistoryData = () => {
   const getExpenses = async() => {
     try {
       const { data } = await axios.get('http://localhost:8000/api/v1/transaction/getExpenses', {withCredentials: true})
-      console.log(data.expenses);
       setExpenses(data.expenses)
     } catch (error) {
       console.log(error);

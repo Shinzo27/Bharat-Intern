@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const AddExpenses = () => {
   const [date, setDate] = useState('');
@@ -6,9 +8,17 @@ const AddExpenses = () => {
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission logic here
+    try {
+      const { data } = await axios.post('http://localhost:8000/api/v1/transaction/addExpense', { date, category, amount, description }, { withCredentials: true })
+      if(data.success) {
+        toast.success(data.message)
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log(error);
+    }
     console.log({ date, category, amount, description });
   };
   return (

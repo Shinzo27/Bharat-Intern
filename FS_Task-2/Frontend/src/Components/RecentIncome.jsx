@@ -10,7 +10,6 @@ const RecentIncome = () => {
         "http://localhost:8000/api/v1/transaction/getIncome",
         { withCredentials: true }
       );
-      console.log(data.expenses);
       setIncomes(data.incomes);
     } catch (error) {
       console.log(error);

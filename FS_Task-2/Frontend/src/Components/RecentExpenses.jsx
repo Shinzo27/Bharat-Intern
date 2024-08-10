@@ -7,7 +7,6 @@ const RecentExpenses = () => {
   const getExpenses = async() => {
     try {
       const { data } = await axios.get('http://localhost:8000/api/v1/transaction/getExpenses', {withCredentials: true})
-      console.log(data.expenses);
       setExpenses(data.expenses)
     } catch (error) {
       console.log(error);
@@ -34,7 +33,7 @@ const RecentExpenses = () => {
             <tr key={index} className="border-t">
               <td className="py-2">{expense.date}</td>
               <td className="py-2">{expense.category}</td>
-              <td className="py-2">{`$${expense.amount.toFixed(2)}`}</td>
+              <td className="py-2">{`₹${expense.amount.toFixed(2)}`}</td>
             </tr>
           ))}
         </tbody>
