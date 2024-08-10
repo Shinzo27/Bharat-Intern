@@ -100,7 +100,7 @@ export const signin = async(req,res) => {
     }
 }
 
-export const logout = () => {
+export const logout = (req,res) => {
     res
       .status(201)
       .cookie("token", "", {

@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import { config } from 'dotenv'
 import cookieParser from 'cookie-parser'
 import transactionRouter from './Routes/Transaction.js'
+import cors from 'cors'
 
 const app = express()
 const PORT = process.env.PORT | 8000
@@ -12,6 +13,11 @@ mongoose.connect("mongodb://127.0.0.1:27017/wealthy-life").then(()=>console.log(
 
 config({path: './.env'})
 
+app.use(cors({
+    origin: ["http://localhost:5173"],
+    methods: ["GET","POST","PUT","DELETE"],
+    credentials: true
+}))
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({extended: true}))
