@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios'
 
 const RecentExpenses = () => {
-  const expenses = [
-    { date: "2023-06-01", category: "Groceries", amount: 50.25 },
-    { date: "2023-06-03", category: "Utilities", amount: 125.0 },
-    { date: "2023-06-05", category: "Transportation", amount: 30.75 },
-  ];
+  const [ expenses, setExpenses ] = useState([])
+
+  const getExpenses = async() => {
+    try {
+      const { data } = await axios.get('http://localhost:8000/api/v1/transaction/getExpenses', {withCredentials: true})
+      console.log(data.expenses);
+      setExpenses(data.expenses)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    getExpenses()
+  }, [])
 
   return (
     <div className="bg-white ml-10 w-96 h-80 p-6 rounded-lg border-2 text-sm">
